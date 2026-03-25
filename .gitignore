@@ -1,0 +1,25 @@
+# Maven
+target/
+*.jar
+*.class
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.project
+.classpath
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+.docker/
+
+# Sensitive
+*.env.local

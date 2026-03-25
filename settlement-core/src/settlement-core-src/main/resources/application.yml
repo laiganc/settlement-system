@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: settlement-core
+
+# 内存存储开关（生产环境需关闭）
+settlement:
+  storage:
+    mode: memory
+  nav:
+    default-value: 1.0000
