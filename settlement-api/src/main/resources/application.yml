@@ -1,8 +1,26 @@
 spring:
   application:
     name: settlement-api
+  datasource:
+    url: jdbc:mysql://mysql:3306/settlement?useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&characterEncoding=utf8
+    username: settlement
+    password: Settlement123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
 server:
   port: 8080
+
 management:
   endpoints:
     web:

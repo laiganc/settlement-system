@@ -16,13 +16,8 @@ public class AccountService {
     @Autowired
     private AccountRepository accountRepository;
 
-    // ========== 余额操作 ==========
-
-    /**
-     * 增加可用余额
-     */
     public void addBalance(String accountId, BigDecimal amount) {
-        Account account = accountRepository.findById(accountId);
+        Account account = accountRepository.findAccountById(accountId);
         if (account == null) {
             throw new RuntimeException("账户不存在: " + accountId);
         }
@@ -30,11 +25,8 @@ public class AccountService {
         accountRepository.save(account);
     }
 
-    /**
-     * 扣除可用余额
-     */
     public void deductBalance(String accountId, BigDecimal amount) {
-        Account account = accountRepository.findById(accountId);
+        Account account = accountRepository.findAccountById(accountId);
         if (account == null) {
             throw new RuntimeException("账户不存在: " + accountId);
         }
@@ -45,11 +37,8 @@ public class AccountService {
         accountRepository.save(account);
     }
 
-    /**
-     * 冻结资金
-     */
     public void freezeBalance(String accountId, BigDecimal amount) {
-        Account account = accountRepository.findById(accountId);
+        Account account = accountRepository.findAccountById(accountId);
         if (account == null) {
             throw new RuntimeException("账户不存在: " + accountId);
         }
@@ -57,11 +46,8 @@ public class AccountService {
         accountRepository.save(account);
     }
 
-    /**
-     * 解冻资金
-     */
     public void unfreezeBalance(String accountId, BigDecimal amount) {
-        Account account = accountRepository.findById(accountId);
+        Account account = accountRepository.findAccountById(accountId);
         if (account == null) {
             throw new RuntimeException("账户不存在: " + accountId);
         }
@@ -72,13 +58,8 @@ public class AccountService {
         accountRepository.save(account);
     }
 
-    // ========== 份额操作 ==========
-
-    /**
-     * 增加份额
-     */
     public void addShares(String accountId, BigDecimal shares) {
-        Account account = accountRepository.findById(accountId);
+        Account account = accountRepository.findAccountById(accountId);
         if (account == null) {
             throw new RuntimeException("账户不存在: " + accountId);
         }
@@ -86,11 +67,8 @@ public class AccountService {
         accountRepository.save(account);
     }
 
-    /**
-     * 扣除份额
-     */
     public void deductShares(String accountId, BigDecimal shares) {
-        Account account = accountRepository.findById(accountId);
+        Account account = accountRepository.findAccountById(accountId);
         if (account == null) {
             throw new RuntimeException("账户不存在: " + accountId);
         }
@@ -101,20 +79,18 @@ public class AccountService {
         accountRepository.save(account);
     }
 
-    // ========== 查询操作 ==========
-
     public BigDecimal getAvailableBalance(String accountId) {
-        Account account = accountRepository.findById(accountId);
+        Account account = accountRepository.findAccountById(accountId);
         return account != null ? account.getAvailableBalance() : BigDecimal.ZERO;
     }
 
     public BigDecimal getFrozenBalance(String accountId) {
-        Account account = accountRepository.findById(accountId);
+        Account account = accountRepository.findAccountById(accountId);
         return account != null ? account.getFrozenBalance() : BigDecimal.ZERO;
     }
 
     public BigDecimal getTotalShares(String accountId) {
-        Account account = accountRepository.findById(accountId);
+        Account account = accountRepository.findAccountById(accountId);
         return account != null ? account.getTotalShares() : BigDecimal.ZERO;
     }
 }

@@ -1,27 +1,45 @@
 package com.settlement.core.entity;
 
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-/**
- * 申购订单实体
- */
+@Entity
+@Table(name = "subscription_order")
 public class SubscriptionOrder {
-    private String orderId;         // 订单ID
-    private String accountId;       // 账户ID
-    private String productId;       // 产品ID
-    private BigDecimal amount;      // 申购金额
-    private BigDecimal shares;      // 确认份额
-    private BigDecimal nav;         // 确认净值
-    private OrderStatus status;     // 订单状态
-    private LocalDateTime createTime;
-    private LocalDateTime confirmTime;
 
     public enum OrderStatus {
-        PENDING,    // 待确认
-        CONFIRMED,  // 已确认
-        CANCELLED   // 已取消
+        PENDING, CONFIRMED, CANCELLED
     }
+
+    @Id
+    @Column(name = "order_id", length = 64)
+    private String orderId;
+
+    @Column(name = "account_id", length = 64)
+    private String accountId;
+
+    @Column(name = "product_id", length = 64)
+    private String productId;
+
+    @Column(name = "amount", precision = 20, scale = 4)
+    private BigDecimal amount;
+
+    @Column(name = "shares", precision = 20, scale = 4)
+    private BigDecimal shares;
+
+    @Column(name = "nav", precision = 10, scale = 6)
+    private BigDecimal nav;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", length = 16)
+    private OrderStatus status;
+
+    @Column(name = "submit_time")
+    private LocalDateTime submitTime;
+
+    @Column(name = "confirm_time")
+    private LocalDateTime confirmTime;
 
     public SubscriptionOrder() {}
 
@@ -30,13 +48,10 @@ public class SubscriptionOrder {
         this.accountId = accountId;
         this.productId = productId;
         this.amount = amount;
-        this.shares = BigDecimal.ZERO;
-        this.nav = BigDecimal.ONE; // 固定净值1.0
         this.status = OrderStatus.PENDING;
-        this.createTime = LocalDateTime.now();
+        this.submitTime = LocalDateTime.now();
     }
 
-    // Getters and Setters
     public String getOrderId() { return orderId; }
     public void setOrderId(String orderId) { this.orderId = orderId; }
     public String getAccountId() { return accountId; }
@@ -51,8 +66,8 @@ public class SubscriptionOrder {
     public void setNav(BigDecimal nav) { this.nav = nav; }
     public OrderStatus getStatus() { return status; }
     public void setStatus(OrderStatus status) { this.status = status; }
-    public LocalDateTime getCreateTime() { return createTime; }
-    public void setCreateTime(LocalDateTime createTime) { this.createTime = createTime; }
+    public LocalDateTime getSubmitTime() { return submitTime; }
+    public void setSubmitTime(LocalDateTime submitTime) { this.submitTime = submitTime; }
     public LocalDateTime getConfirmTime() { return confirmTime; }
     public void setConfirmTime(LocalDateTime confirmTime) { this.confirmTime = confirmTime; }
 }

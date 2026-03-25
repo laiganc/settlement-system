@@ -1,18 +1,34 @@
 package com.settlement.core.entity;
 
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-/**
- * 账户实体
- */
+@Entity
+@Table(name = "account")
 public class Account {
-    private String accountId;           // 账户ID
-    private String accountName;         // 账户名称
-    private BigDecimal availableBalance;// 可用余额
-    private BigDecimal frozenBalance;   // 冻结金额（赎回时冻结）
-    private BigDecimal totalShares;     // 持有份额
+
+    @Id
+    @Column(name = "account_id", length = 64)
+    private String accountId;
+
+    @Column(name = "account_name", length = 128)
+    private String accountName;
+
+    @Column(name = "available_balance", precision = 18, scale = 2)
+    private BigDecimal availableBalance;
+
+    @Column(name = "frozen_balance", precision = 18, scale = 2)
+    private BigDecimal frozenBalance;
+
+    @Column(name = "total_shares", precision = 18, scale = 2)
+    private BigDecimal totalShares;
+
+    @Column(name = "create_time")
     private LocalDateTime createTime;
+
+    @Column(name = "update_time")
+    private LocalDateTime updateTime;
 
     public Account() {}
 
@@ -23,9 +39,9 @@ public class Account {
         this.frozenBalance = BigDecimal.ZERO;
         this.totalShares = BigDecimal.ZERO;
         this.createTime = LocalDateTime.now();
+        this.updateTime = LocalDateTime.now();
     }
 
-    // Getters and Setters
     public String getAccountId() { return accountId; }
     public void setAccountId(String accountId) { this.accountId = accountId; }
     public String getAccountName() { return accountName; }
@@ -38,4 +54,6 @@ public class Account {
     public void setTotalShares(BigDecimal totalShares) { this.totalShares = totalShares; }
     public LocalDateTime getCreateTime() { return createTime; }
     public void setCreateTime(LocalDateTime createTime) { this.createTime = createTime; }
+    public LocalDateTime getUpdateTime() { return updateTime; }
+    public void setUpdateTime(LocalDateTime updateTime) { this.updateTime = updateTime; }
 }
